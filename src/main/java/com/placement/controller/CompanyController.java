@@ -35,5 +35,9 @@ public class CompanyController {
         return new ResponseEntity<>(companyService.getAllCompany(),HttpStatus.OK);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CompanyResponse> updateById(@PathVariable Long id,@Valid @RequestBody CompanyRequest req){
+        return new ResponseEntity<>(companyService.updateCompanyById(id,req),HttpStatus.OK);
+    }
 
 }

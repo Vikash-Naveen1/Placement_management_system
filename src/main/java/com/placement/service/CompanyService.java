@@ -48,6 +48,7 @@ public class CompanyService {
             CompanyResponse res=new CompanyResponse();
             res.setId(c.getId());
             res.setEmail(c.getEmail());
+            res.setName(c.getName());
             res.setDescription(c.getDescription());
             res.setWebsite(c.getWebsite());
             res.setLocation(c.getLocation());
@@ -75,5 +76,32 @@ public class CompanyService {
             i++;
         }
         return response;
+    }
+
+    public CompanyResponse updateCompanyById(Long id,CompanyRequest req){
+        Optional<Company> company=companyRepository.findById(id);
+        if(company.isPresent()){
+            Company c=company.get();
+            c.setName(req.getName());
+            c.setWebsite(req.getWebsite());
+            c.setEmail(req.getEmail());
+            c.setLocation(req.getLocation());
+            c.setDescription(req.getDescription());
+
+            Company updated=companyRepository.save(c);
+
+            CompanyResponse res=new CompanyResponse();
+            res.setId(updated.getId());
+            res.setName(updated.getName());
+            res.setDescription(updated.getDescription());
+            res.setWebsite(updated.getWebsite());
+            res.setEmail(updated.getEmail());
+            res.setLocation(updated.getLocation());
+
+            return res;
+        }
+        else{
+            throw new ResourceNotFoundException("Company not found with this Id "+id);
+        }
     }
 }

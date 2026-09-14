@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
@@ -34,4 +33,8 @@ public class Company {
 
     @Column(length=255)
     private String website;
+
+//    public String getDescription(String description) {
+//        return description;
+//    }
 }
