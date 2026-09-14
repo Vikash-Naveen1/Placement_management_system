@@ -1,5 +1,7 @@
 package com.placement.controller;
 
+import com.placement.dto.StudentRequest;
+import com.placement.dto.StudentResponse;
 import com.placement.entity.Student;
 import com.placement.service.StudentService;
 import jakarta.validation.Valid;
@@ -21,7 +23,7 @@ public class StudentController {
     }
 
     @PostMapping("/student")
-    public ResponseEntity<Student> createStd(@Valid @RequestBody Student std){
-        return new ResponseEntity<Student>(studentService.createStudent(std), HttpStatus.CREATED);
+    public ResponseEntity<StudentResponse> createStd(@Valid @RequestBody StudentRequest stdreq){
+        return new ResponseEntity<>(studentService.createStudent(stdreq), HttpStatus.CREATED);
     }
 }
