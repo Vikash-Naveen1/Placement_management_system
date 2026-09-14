@@ -6,8 +6,6 @@ import com.placement.entity.Student;
 import com.placement.exception.ResourceNotFoundException;
 import com.placement.repository.StudentRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,7 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
-    StudentService(StudentRepository studentrepo){
+    public StudentService(StudentRepository studentrepo){
         this.studentRepository=studentrepo;
     }
 

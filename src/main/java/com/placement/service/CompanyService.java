@@ -17,7 +17,7 @@ import java.util.Optional;
 public class CompanyService {
     private final CompanyRepository companyRepository;
 
-    CompanyService(CompanyRepository companyRepository){
+    public CompanyService(CompanyRepository companyRepository){
         this.companyRepository=companyRepository;
     }
 
