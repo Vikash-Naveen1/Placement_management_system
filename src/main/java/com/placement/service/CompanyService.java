@@ -3,8 +3,11 @@ package com.placement.service;
 import com.placement.dto.CompanyRequest;
 import com.placement.dto.CompanyResponse;
 import com.placement.entity.Company;
+import com.placement.exception.ResourceNotFoundException;
 import com.placement.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CompanyService {
@@ -33,5 +36,23 @@ public class CompanyService {
         res.setWebsite(saved.getWebsite());
 
         return res;
+    }
+
+    public CompanyResponse getCompanyById(Long id){
+        Optional<Company> company=companyRepository.findById(id);
+
+        if(company.isPresent()){
+            Company c=company.get();
+            CompanyResponse res=new CompanyResponse();
+            res.setId(c.getId());
+            res.setEmail(c.getEmail());
+            res.setDescription(c.getDescription());
+            res.setWebsite(c.getWebsite());
+            res.setLocation(c.getLocation());
+            return res;
+        }
+        else{
+            throw new ResourceNotFoundException("Company not found with Id "+id);
+        }
     }
 }
