@@ -144,4 +144,16 @@ public class StudentService {
             throw new ResourceNotFoundException("Student Not found with "+id);
         }
     }
+
+    public void deleteStudentById(Long id){
+        Optional<Student> student=studentRepository.findById(id);
+
+        if(student.isPresent()){
+            Student s=student.get();
+            studentRepository.delete(s);
+        }
+        else{
+            throw new ResourceNotFoundException("Invalid Student id "+ id);
+        }
+    }
 }
