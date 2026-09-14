@@ -3,8 +3,13 @@ package com.placement.service;
 import com.placement.dto.StudentRequest;
 import com.placement.dto.StudentResponse;
 import com.placement.entity.Student;
+import com.placement.exception.ResourceNotFoundException;
 import com.placement.repository.StudentRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -47,6 +52,56 @@ public class StudentService {
         response.setCurrentSemester(savedStudent.getCurrentSemester());
         response.setResumeUrl(savedStudent.getResumeUrl());
 
+        return response;
+    }
+
+    public StudentResponse getStudentById(Long id){
+        Optional<Student> student=studentRepository.findById(id);
+
+        if(student.isPresent()){
+            Student s=student.get();
+            StudentResponse res=new StudentResponse();
+            res.setId(s.getId());
+            res.setName(s.getName());
+            res.setEmail(s.getEmail());
+            res.setDateOfBirth(s.getDateOfBirth());
+            res.setJoiningYear(s.getJoiningYear());
+            res.setGraduationYear(s.getGraduationYear());
+            res.setCgpa(s.getCgpa());
+            res.setTenthPercentage(s.getTenthPercentage());
+            res.setTwelfthPercentage(s.getTwelfthPercentage());
+            res.setBacklogs(s.getBacklogs());
+            res.setCurrentSemester(s.getCurrentSemester());
+            res.setResumeUrl(s.getResumeUrl());
+            return res;
+        }
+        else{
+            throw new ResourceNotFoundException("Student not found with id: " + id);
+        }
+    }
+
+    public List<StudentResponse> getAllStudents(){
+        List<Student> student=studentRepository.findAll();
+        List<StudentResponse> response=new ArrayList<>();
+        int i=0;
+        while(i<student.size()){
+            Student s=student.get(i);
+            StudentResponse res=new StudentResponse();
+            res.setId(s.getId());
+            res.setName(s.getName());
+            res.setEmail(s.getEmail());
+            res.setDateOfBirth(s.getDateOfBirth());
+            res.setJoiningYear(s.getJoiningYear());
+            res.setGraduationYear(s.getGraduationYear());
+            res.setCgpa(s.getCgpa());
+            res.setTenthPercentage(s.getTenthPercentage());
+            res.setTwelfthPercentage(s.getTwelfthPercentage());
+            res.setBacklogs(s.getBacklogs());
+            res.setCurrentSemester(s.getCurrentSemester());
+            res.setResumeUrl(s.getResumeUrl());
+            response.add(res);
+            i++;
+        }
         return response;
     }
 }

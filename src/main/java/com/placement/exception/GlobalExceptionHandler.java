@@ -15,21 +15,31 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex){
-        Map<String,String> errors=new HashMap<>();
+    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
         ex.getBindingResult()
                 .getFieldErrors()
-                .forEach(error->
-                        errors.put(error.getField(),error.getDefaultMessage())
+                .forEach(error ->
+                        errors.put(error.getField(), error.getDefaultMessage())
                 );
 
-        ErrorResponse errorResponse=new ErrorResponse(
+        ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
                 "Validation Failed",
                 errors
         );
-
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException ex) {
+        ErrorResponse errorResponse=new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                null
+        );
+        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
     }
 }

@@ -7,10 +7,9 @@ import com.placement.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/placement")
@@ -25,5 +24,15 @@ public class StudentController {
     @PostMapping("/student")
     public ResponseEntity<StudentResponse> createStd(@Valid @RequestBody StudentRequest stdreq){
         return new ResponseEntity<>(studentService.createStudent(stdreq), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/student/{id}")
+    public ResponseEntity<StudentResponse> getStudentById(@PathVariable Long id){
+        return new ResponseEntity<>(studentService.getStudentById(id),HttpStatus.OK);
+    }
+
+    @GetMapping("/student/getAll")
+    public ResponseEntity<List<StudentResponse>> getAllStudents(){
+        return new ResponseEntity<>(studentService.getAllStudents(),HttpStatus.OK);
     }
 }
