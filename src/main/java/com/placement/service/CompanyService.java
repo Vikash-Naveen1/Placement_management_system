@@ -7,6 +7,8 @@ import com.placement.exception.ResourceNotFoundException;
 import com.placement.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,5 +56,24 @@ public class CompanyService {
         else{
             throw new ResourceNotFoundException("Company not found with Id "+id);
         }
+    }
+
+    public List<CompanyResponse> getAllCompany(){
+        List<Company> company=companyRepository.findAll();
+        List<CompanyResponse> response=new ArrayList<>();
+        int i=0;
+        while(i<company.size()){
+            Company c=company.get(i);
+            CompanyResponse res=new CompanyResponse();
+            res.setId(c.getId());
+            res.setName(c.getName());
+            res.setEmail(c.getEmail());
+            res.setWebsite(c.getWebsite());
+            res.setLocation(c.getLocation());
+            res.setDescription(c.getDescription());
+            response.add(res);
+            i++;
+        }
+        return response;
     }
 }
