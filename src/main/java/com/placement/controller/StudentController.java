@@ -35,4 +35,9 @@ public class StudentController {
     public ResponseEntity<List<StudentResponse>> getAllStudents(){
         return new ResponseEntity<>(studentService.getAllStudents(),HttpStatus.OK);
     }
+
+    @PutMapping("/student/{id}")
+    public ResponseEntity<StudentResponse> updateStudent(@PathVariable Long id,@Valid @RequestBody StudentRequest req){
+        return new ResponseEntity<>(studentService.updateById(id,req),HttpStatus.OK);
+    }
 }

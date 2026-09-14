@@ -6,6 +6,8 @@ import com.placement.entity.Student;
 import com.placement.exception.ResourceNotFoundException;
 import com.placement.repository.StudentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,5 +105,43 @@ public class StudentService {
             i++;
         }
         return response;
+    }
+
+    public StudentResponse updateById(Long id,StudentRequest req){
+        Optional<Student> student=studentRepository.findById(id);
+
+        if(student.isPresent()){
+            Student s=student.get();
+            s.setName(req.getName());
+            s.setEmail(req.getEmail());
+            s.setDateOfBirth(req.getDateOfBirth());
+            s.setJoiningYear(req.getJoiningYear());
+            s.setGraduationYear(req.getGraduationYear());
+            s.setCgpa(req.getCgpa());
+            s.setTenthPercentage(req.getTenthPercentage());
+            s.setTwelfthPercentage(req.getTwelfthPercentage());
+            s.setBacklogs(req.getBacklogs());
+            s.setCurrentSemester(req.getCurrentSemester());
+            s.setResumeUrl(req.getResumeUrl());
+
+            Student updated=studentRepository.save(s);
+            StudentResponse res=new StudentResponse();
+            res.setId(updated.getId());
+            res.setName(updated.getName());
+            res.setEmail(updated.getEmail());
+            res.setDateOfBirth(updated.getDateOfBirth());
+            res.setJoiningYear(updated.getJoiningYear());
+            res.setGraduationYear(updated.getGraduationYear());
+            res.setCgpa(updated.getCgpa());
+            res.setTenthPercentage(updated.getTenthPercentage());
+            res.setTwelfthPercentage(updated.getTwelfthPercentage());
+            res.setBacklogs(updated.getBacklogs());
+            res.setCurrentSemester(updated.getCurrentSemester());
+            res.setResumeUrl(updated.getResumeUrl());
+            return res;
+        }
+        else{
+            throw new ResourceNotFoundException("Student Not found with "+id);
+        }
     }
 }
