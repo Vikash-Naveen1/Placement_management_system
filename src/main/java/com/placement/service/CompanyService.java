@@ -6,6 +6,8 @@ import com.placement.entity.Company;
 import com.placement.exception.ResourceNotFoundException;
 import com.placement.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +104,19 @@ public class CompanyService {
         }
         else{
             throw new ResourceNotFoundException("Company not found with this Id "+id);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCompanyById(@PathVariable Long id){
+        Optional<Company> company=companyRepository.findById(id);
+
+        if(company.isPresent()){
+            Company c=company.get();
+            companyRepository.delete(c);
+        }
+        else{
+            throw new ResourceNotFoundException("Invalid Company Id "+id);
         }
     }
 }

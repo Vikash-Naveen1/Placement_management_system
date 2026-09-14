@@ -40,4 +40,10 @@ public class CompanyController {
         return new ResponseEntity<>(companyService.updateCompanyById(id,req),HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CompanyResponse> deleteById(@PathVariable Long id){
+        companyService.deleteCompanyById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
