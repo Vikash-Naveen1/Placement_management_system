@@ -34,7 +34,4 @@ public class Company {
     @Column(length=255)
     private String website;
 
-//    public String getDescription(String description) {
-//        return description;
-//    }
 }
