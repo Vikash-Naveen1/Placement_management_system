@@ -1,15 +1,12 @@
 package com.placement.dto;
 
-import com.placement.entity.Company;
-import com.placement.entity.JobStatus;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
 @Data
 public class JobRequest {
 

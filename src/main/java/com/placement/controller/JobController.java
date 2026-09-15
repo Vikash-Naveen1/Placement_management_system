@@ -27,12 +27,12 @@ public class JobController {
         return new ResponseEntity<>(jobService.createJob(req), HttpStatus.CREATED);
     }
 
-    @GetMapping("/job/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<JobResponse> getJobById(@PathVariable Long id){
         return new ResponseEntity<>(jobService.getJobById(id),HttpStatus.OK);
     }
 
-    @GetMapping("/job")
+    @GetMapping("getAll")
     public ResponseEntity<List<JobResponse>> getAllJobs(){
         return new ResponseEntity<>(jobService.getAll(),HttpStatus.OK);
     }

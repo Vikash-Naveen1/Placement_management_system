@@ -158,7 +158,7 @@ public class JobService {
         Optional<Job> job=jobRepository.findById(id);
 
         if(job.isPresent()){
-            Job j=new Job();
+            Job j=job.get();
             if(j.getStatus()!=JobStatus.PENDING_APPROVAL){
                 throw new IllegalStateException("Only pending jobs can be approved");
             }
@@ -187,10 +187,9 @@ public class JobService {
     public JobResponse rejectJob(Long id) {
         Optional<Job> job = jobRepository.findById(id);
         if (job.isPresent()) {
-
             Job j = job.get();
             if (j.getStatus() != JobStatus.PENDING_APPROVAL) {
-                throw new IllegalStateException("Only pending jobs can be rejected");
+                throw new IllegalStateException("Job is not opened yet");
             }
 
             j.setStatus(JobStatus.REJECTED);
