@@ -2,11 +2,13 @@ package com.placement.controller;
 
 import com.placement.dto.JobRequest;
 import com.placement.dto.JobResponse;
+import com.placement.entity.Job;
 import com.placement.repository.CompanyRepository;
 import com.placement.repository.JobRepository;
 import com.placement.service.CompanyService;
 import com.placement.service.JobService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,5 +58,10 @@ public class JobController {
     @PutMapping("/reject/{id}")
     public ResponseEntity<JobResponse> rejectJob(@PathVariable Long id){
         return new ResponseEntity<>(jobService.rejectJob(id),HttpStatus.OK);
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<Job>> getAllJobs(@RequestParam int page, @RequestParam int size) {
+        return new ResponseEntity<>(jobService.getAllJobsPages(page, size), HttpStatus.OK);
     }
 }

@@ -9,6 +9,10 @@ import com.placement.exception.ResourceNotFoundException;
 import com.placement.repository.CompanyRepository;
 import com.placement.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -212,5 +216,10 @@ public class JobService {
         } else {
             throw new ResourceNotFoundException("Job not found with id " + id);
         }
+    }
+
+    public Page<Job> getAllJobsPages(int page,int size){
+        Pageable pageable = PageRequest.of(page,size);
+        return jobRepository.findAll(pageable);
     }
 }
