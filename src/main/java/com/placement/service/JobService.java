@@ -153,4 +153,34 @@ public class JobService {
             throw new ResourceNotFoundException("Job not found with id "+id);
         }
     }
+
+    public JobResponse approvalJob(Long id){
+        Optional<Job> job=jobRepository.findById(id);
+
+        if(job.isPresent()){
+            Job j=new Job();
+            if(j.getStatus()!=JobStatus.PENDING_APPROVAL){
+                throw new IllegalStateException("Only pending jobs can be approved");
+            }
+            j.setStatus(JobStatus.OPEN);
+
+            Job updated = jobRepository.save(j);
+
+            JobResponse res = new JobResponse();
+
+            res.setId(updated.getId());
+            res.setCompanyId(updated.getCompany().getId());
+            res.setTitle(updated.getTitle());
+            res.setDescription(updated.getDescription());
+            res.setLocation(updated.getLocation());
+            res.setAnnualCtcLpa(updated.getAnnualCtcLpa());
+            res.setApplicationDeadline(updated.getApplicationDeadline());
+            res.setStatus(updated.getStatus());
+
+            return res;
+        }
+        else {
+            throw new ResourceNotFoundException("Job not found with id " + id);
+        }
+    }
 }
