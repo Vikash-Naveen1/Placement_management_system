@@ -47,4 +47,14 @@ public class JobController {
         jobService.deleteJob(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/approve/{id}")
+    public ResponseEntity<JobResponse> approveJob(@PathVariable Long id) {
+        return new ResponseEntity<>(jobService.approvalJob(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/reject/{id}")
+    public ResponseEntity<JobResponse> rejectJob(@PathVariable Long id){
+        return new ResponseEntity<>(jobService.rejectJob(id),HttpStatus.OK);
+    }
 }
