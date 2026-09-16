@@ -22,4 +22,9 @@ public class ApplicationController {
     public ResponseEntity<ApplicationResponse> createApplication(@Valid @RequestBody ApplicationRequest req){
         return new ResponseEntity<>(applicationService.createApplication(req), HttpStatus.CREATED);
     }
+
+    @PutMapping("/shortlist/{id}")
+    public ResponseEntity<ApplicationResponse> shortlist(@PathVariable Long id) {
+        return new ResponseEntity<>(applicationService.shortList(id), HttpStatus.OK);
+    }
 }

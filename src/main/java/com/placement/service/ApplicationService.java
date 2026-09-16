@@ -45,7 +45,7 @@ public class ApplicationService {
         }
 
         if(applicationRepository.existsByStudentIdAndJobId(req.getStudentId(), req.getJobId())){
-            throw new IllegalStateException("Student has already applied for this job");
+            throw new ResourceNotFoundException("Student has already applied for this job");
         }
 
         Application app=new Application();
@@ -66,5 +66,32 @@ public class ApplicationService {
 
         return res;
 
+    }
+
+    public ApplicationResponse shortList(Long id){
+        Optional<Application> app=applicationRepository.findById(id);
+
+        if(app.isPresent()){
+            Application a=app.get();
+            if(a.getStatus()!=ApplicationStatus.APPLIED){
+                throw new IllegalStateException("Only applied candidates should be shortlisted");
+            }
+            a.setStatus(ApplicationStatus.SHORTLISTED);
+
+            Application shortlisted=applicationRepository.save(a);
+
+            ApplicationResponse res=new ApplicationResponse();
+
+            res.setStudentId(shortlisted.getStudent().getId());
+            res.setId(shortlisted.getId());
+            res.setStatus(shortlisted.getStatus());
+            res.setAppliedAt(shortlisted.getAppliedAt());
+            res.setJobId(shortlisted.getJob().getId());
+
+            return res;
+        }
+        else{
+            throw new ResourceNotFoundException("Application not found with id "+id);
+        }
     }
 }
