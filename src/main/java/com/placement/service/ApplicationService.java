@@ -94,4 +94,54 @@ public class ApplicationService {
             throw new ResourceNotFoundException("Application not found with id "+id);
         }
     }
+
+    public ApplicationResponse selectApplication(Long id){
+        Optional<Application> app=applicationRepository.findById(id);
+
+        if(app.isPresent()){
+            Application a=app.get();
+            if(a.getStatus()!=ApplicationStatus.INTERVIEW){
+                throw new ResourceNotFoundException("Only interviewed candidates will be selected");
+            }
+
+            a.setStatus(ApplicationStatus.SELECTED);
+            Application saved=applicationRepository.save(a);
+            ApplicationResponse res=new ApplicationResponse();
+
+            res.setJobId(saved.getJob().getId());
+            res.setId(saved.getId());
+            res.setStatus(saved.getStatus());
+            res.setStudentId(saved.getStudent().getId());
+            res.setAppliedAt(saved.getAppliedAt());
+            return res;
+        }
+        else{
+            throw new ResourceNotFoundException("Application not found with the id "+id);
+        }
+    }
+
+    public ApplicationResponse rejectApplication(Long id){
+        Optional<Application> app=applicationRepository.findById(id);
+
+        if(app.isPresent()){
+            Application a=app.get();
+            if(a.getStatus()!=ApplicationStatus.INTERVIEW){
+                throw new ResourceNotFoundException("Only interviewed candidates will be rejected");
+            }
+
+            a.setStatus(ApplicationStatus.REJECTED);
+            Application saved=applicationRepository.save(a);
+            ApplicationResponse res=new ApplicationResponse();
+
+            res.setJobId(saved.getJob().getId());
+            res.setId(saved.getId());
+            res.setStatus(saved.getStatus());
+            res.setStudentId(saved.getStudent().getId());
+            res.setAppliedAt(saved.getAppliedAt());
+            return res;
+        }
+        else{
+            throw new ResourceNotFoundException("Application not found with the id "+id);
+        }
+    }
 }

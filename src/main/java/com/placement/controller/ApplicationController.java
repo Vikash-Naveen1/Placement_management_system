@@ -2,6 +2,7 @@ package com.placement.controller;
 
 import com.placement.dto.ApplicationRequest;
 import com.placement.dto.ApplicationResponse;
+import com.placement.entity.Application;
 import com.placement.service.ApplicationService;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
@@ -26,5 +27,15 @@ public class ApplicationController {
     @PutMapping("/shortlist/{id}")
     public ResponseEntity<ApplicationResponse> shortlist(@PathVariable Long id) {
         return new ResponseEntity<>(applicationService.shortList(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/selected/{id}")
+    public ResponseEntity<ApplicationResponse> selectedById(@PathVariable Long id){
+        return new ResponseEntity<>(applicationService.selectApplication(id),HttpStatus.OK);
+    }
+
+    @PutMapping("/rejected/{id}")
+    public ResponseEntity<ApplicationResponse> rejectedById(@PathVariable Long id){
+        return new ResponseEntity<>(applicationService.rejectApplication(id),HttpStatus.OK);
     }
 }
