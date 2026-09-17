@@ -218,8 +218,21 @@ public class JobService {
         }
     }
 
-    public Page<Job> getAllJobsPages(int page,int size){
-        Pageable pageable = PageRequest.of(page,size);
-        return jobRepository.findAll(pageable);
+    public Page<JobResponse> getAllJobsPages(int page,int size){
+        Pageable pageable = PageRequest.of(page,size,Sort.by("annualCtclpa").descending());
+        Page<Job> jobs= jobRepository.findAll(pageable);
+        return jobs.map(job->{
+            JobResponse res=new JobResponse();
+            res.setId(job.getId());
+            res.setCompanyId(job.getCompany().getId());
+            res.setTitle(job.getTitle());
+            res.setDescription(job.getDescription());
+            res.setLocation(job.getLocation());
+            res.setAnnualCtcLpa(job.getAnnualCtcLpa());
+            res.setApplicationDeadline(job.getApplicationDeadline());
+            res.setStatus(job.getStatus());
+
+            return res;
+        });
     }
 }

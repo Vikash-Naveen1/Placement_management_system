@@ -2,10 +2,6 @@ package com.placement.controller;
 
 import com.placement.dto.JobRequest;
 import com.placement.dto.JobResponse;
-import com.placement.entity.Job;
-import com.placement.repository.CompanyRepository;
-import com.placement.repository.JobRepository;
-import com.placement.service.CompanyService;
 import com.placement.service.JobService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -61,7 +57,8 @@ public class JobController {
     }
 
     @GetMapping("/page")
-    public ResponseEntity<Page<Job>> getAllJobs(@RequestParam int page, @RequestParam int size) {
+    public ResponseEntity<Page<JobResponse>> getAllJobs(@RequestParam(defaultValue = "0") int page,
+                                                        @RequestParam(defaultValue = "5") int size) {
         return new ResponseEntity<>(jobService.getAllJobsPages(page, size), HttpStatus.OK);
     }
 }
