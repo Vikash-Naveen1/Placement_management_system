@@ -5,6 +5,7 @@ import com.placement.dto.JobResponse;
 import com.placement.entity.Company;
 import com.placement.entity.Job;
 import com.placement.entity.JobStatus;
+import com.placement.exception.BusinessException;
 import com.placement.exception.ResourceNotFoundException;
 import com.placement.repository.CompanyRepository;
 import com.placement.repository.JobRepository;
@@ -163,7 +164,7 @@ public class JobService {
         if(job.isPresent()){
             Job j=job.get();
             if(j.getStatus()!=JobStatus.PENDING_APPROVAL){
-                throw new IllegalStateException("Only pending jobs can be approved");
+                throw new BusinessException("Only pending jobs can be approved");
             }
             j.setStatus(JobStatus.OPEN);
 
@@ -192,7 +193,7 @@ public class JobService {
         if (job.isPresent()) {
             Job j = job.get();
             if (j.getStatus() != JobStatus.PENDING_APPROVAL) {
-                throw new IllegalStateException("Job is not opened yet");
+                throw new BusinessException("Job is not opened yet");
             }
 
             j.setStatus(JobStatus.REJECTED);

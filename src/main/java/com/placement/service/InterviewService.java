@@ -6,6 +6,7 @@ import com.placement.entity.Application;
 import com.placement.entity.ApplicationStatus;
 import com.placement.entity.Interview;
 import com.placement.entity.InterviewStatus;
+import com.placement.exception.BusinessException;
 import com.placement.exception.ResourceNotFoundException;
 import com.placement.repository.ApplicationRepository;
 import com.placement.repository.InterviewRepository;
@@ -35,7 +36,7 @@ public class InterviewService {
 
         // 2. Application must be shortlisted
         if (application.getStatus() != ApplicationStatus.SHORTLISTED) {
-            throw new IllegalStateException(
+            throw new BusinessException(
                     "Only shortlisted applications can be interviewed"
             );
         }
