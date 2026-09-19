@@ -2,7 +2,6 @@ package com.placement.controller;
 
 import com.placement.dto.StudentRequest;
 import com.placement.dto.StudentResponse;
-import com.placement.entity.Student;
 import com.placement.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

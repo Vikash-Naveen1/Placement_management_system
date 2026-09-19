@@ -1,4 +1,5 @@
 package com.placement.repository;
+
 import com.placement.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 

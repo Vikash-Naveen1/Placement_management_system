@@ -3,6 +3,7 @@ package com.placement.service;
 import com.placement.dto.ApplicationRequest;
 import com.placement.dto.ApplicationResponse;
 import com.placement.entity.*;
+import com.placement.exception.BusinessException;
 import com.placement.exception.ResourceNotFoundException;
 import com.placement.repository.ApplicationRepository;
 import com.placement.repository.JobRepository;
@@ -47,16 +48,16 @@ public class ApplicationService {
 
         if(job.getStatus()!= JobStatus.OPEN){
             log.warn("Application rejected because job {} is not OPEN. Status: {}",job.getId(),job.getStatus());
-            throw new IllegalStateException("Applications are not allowed for this job");
+            throw new BusinessException("Applications are not allowed for this job");
         }
 
         if(LocalDate.now().isAfter(job.getApplicationDeadline())){
-            throw new IllegalStateException("Application deadline has passed");
+            throw new BusinessException("Application deadline has passed");
         }
 
         if(applicationRepository.existsByStudentIdAndJobId(req.getStudentId(), req.getJobId())){
             log.warn("Student {} already applied for job {}",req.getStudentId(),req.getJobId());
-            throw new ResourceNotFoundException("Student has already applied for this job");
+            throw new BusinessException("Student has already applied for this job");
         }
 
         Application app=new Application();
@@ -86,7 +87,7 @@ public class ApplicationService {
         if(app.isPresent()){
             Application a=app.get();
             if(a.getStatus()!=ApplicationStatus.APPLIED){
-                throw new IllegalStateException("Only applied candidates should be shortlisted");
+                throw new BusinessException("Only applied candidates should be shortlisted");
             }
             a.setStatus(ApplicationStatus.SHORTLISTED);
 

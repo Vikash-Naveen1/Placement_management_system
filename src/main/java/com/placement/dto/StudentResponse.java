@@ -1,6 +1,5 @@
 package com.placement.dto;
 
-import jakarta.validation.constraints.*;
 import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDate;

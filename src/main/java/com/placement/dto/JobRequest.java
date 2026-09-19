@@ -1,7 +1,5 @@
 package com.placement.dto;
 
-
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import java.math.BigDecimal;

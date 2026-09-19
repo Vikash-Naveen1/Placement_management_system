@@ -1,6 +1,5 @@
 package com.placement.dto;
 
-import com.placement.entity.Student;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

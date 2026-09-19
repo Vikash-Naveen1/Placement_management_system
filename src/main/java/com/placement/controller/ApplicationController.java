@@ -2,10 +2,8 @@ package com.placement.controller;
 
 import com.placement.dto.ApplicationRequest;
 import com.placement.dto.ApplicationResponse;
-import com.placement.entity.Application;
 import com.placement.service.ApplicationService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
